@@ -1,0 +1,113 @@
+{% load  static%}
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<title>caselink</title>
+<link rel="stylesheet" type="text/css" href="{% static '/style/style.css'%}" title="style" />
+<style>
+#customers {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04AA6D;
+  color: white;
+}
+</style>
+</head>
+
+<body>
+	<div id="main">
+		<div id="header">
+			<div id="logo">
+				<div id="logo_text">
+					<!-- class="logo_colour", allows you to change the colour of the text -->
+					<h3>
+						<a href="#"><font color="white">Court Case Management</font></a>
+					</h3>
+					<br/><br/>
+				</div>
+			</div>
+			<div id="menubar">
+				<ul id="menu">
+
+                    {% if request.session.role in "client" or request.session.role in "admin" %}
+                         <li><a href="/getlawyers">Lawyers</a></li>
+                    {% endif %}
+
+                    <li><a href="/getcases">Cases</a></li>
+
+                    {% if request.session.role in "client" or request.session.role in "lawyer" %}
+                         <li><a href="/getappointments">Appointments</a></li>
+                    {% endif %}
+
+                    <li><a href="/logout">logout</a></li>
+
+				</ul>
+			</div>
+		</div>
+		<div id="content_header"></div>
+		<div id="site_content">
+
+            <div id="content">
+				
+				<h1>Welcome to  <strong>{{request.session.username}}</strong>{{form.non_field_errors}}</h1>
+
+                <h1>Status : {{message}}</h1>
+
+				<table id="customers">
+
+                    <tr>
+
+                        <td>Document ID</td>
+                        <td>Title</td>
+                        <td>Description</td>
+                        <td>Uploaded on</td>
+                        <td>Download</td>
+
+                        {% if request.session.role in "lawyer" %}
+                            <td>delete</td>
+                        {% endif %}
+
+					</tr>
+					              {% for document in documents %}
+
+                        <tr>
+
+                            <td>{{ document.id}}</td>
+                            <td>{{ document.title}}</td>
+                            <td>{{ document.description}}</td>
+                            <td>{{ document.uploaddate}}</td>
+
+                            <td><a href="/download?file={{document.documentname }}">Download</a></td>
+
+                            {% if request.session.role in "lawyer"%}
+                                <td><a href="/deletedocuments?caseid={{document.caseid}}">Delete</a></td>
+                            {% endif %}
+
+					    </tr>
+
+					{% endfor %}
+
+  				</table>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+

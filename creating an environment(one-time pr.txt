@@ -1,0 +1,14 @@
+creating an environment:(one-time process)
+conda create -n court python==3.6.9
+yes
+conda activate court
+pip install django
+cd C:\Users\nagap\OneDrive\Desktop\court\CourtCaseManagementSystem
+python manage.py runserver
+==========================================
+
+accessing after creation:
+
+conda activate court
+cd C:\Users\nagap\OneDrive\Desktop\court\CourtCaseManagementSystem
+python manage.py runserver

@@ -1,0 +1,104 @@
+{% load  static%}
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<title>caselink</title>
+<link rel="stylesheet" type="text/css" href="{% static 'style/style.css'%}" title="style" />
+</head>
+
+<body>
+	<div id="main">
+		<div id="header">
+			<div id="logo">
+				<div id="logo_text">
+					<!-- class="logo_colour", allows you to change the colour of the text -->
+					<h3>
+						<a href="#"><font color="white">Court Case Management</font></a>
+					</h3>
+					<br/><br/>
+				</div>
+			</div>
+			<div id="menubar">
+				<ul id="menu">
+
+					{% if request.session.role in "client" or request.session.role in "admin" %}
+                         <li><a href="/getlawyers">Lawyers</a></li>
+                    {% endif %}
+
+                    <li><a href="/getcases">Cases</a></li>
+
+                    {% if request.session.role in "client" or request.session.role in "lawyer" %}
+                         <li><a href="/getappointments">Appointments</a></li>
+                    {% endif %}
+
+                    <li><a href="/logout">logout</a></li>
+
+				</ul>
+			</div>
+		</div>
+		<div id="content_header"></div>
+		<div id="site_content">
+			<div id="content">
+
+				<h1>Status : {{message}}</h1>
+
+				<form name="form" action="/postCaseAction/" method="post">
+
+                    {% csrf_token %}
+
+                    <input type="hidden" value="{{ lawyer}}" name="lawyerid">
+
+					<div class="form_settings">
+
+						<p>
+							<span>Title :</span><input class="contact" type="text" name="title" required />
+						</p>
+
+                        <span>Select Case Category:</span>
+                            <select name="category" required>
+                                <option value="">--select -- </option>
+                                <option value="Intellectual Property">Intellectual Property</option>
+                                <option value="Intellectual Property">Intellectual Property</option>
+                                <option value="Public Interest">Public Interest</option>
+                                <option value="Tax" >Tax</option>
+                                <option value="Corporates">Corporates</option>
+                                <option value="Immigrations">Immigrations</option>
+                                <option value="Criminal">Criminal</option>
+                                <option value="Civil Rights">Civil Rights</option>
+                                <option value="Family">Family</option>
+                                <option value="Environmental">Environmental</option>
+                                <option value="Entertainment">Entertainment</option>
+                                <option value="Estate Planning">Estate Planning</option>
+                                <option value="Civil Litigations">Civil Litigations</option>
+                                <option value="Constitutionals">Constitutionals</option>
+                                <option value="Real Estates">Real Estates</option>
+                                <option value="Estate Plannings">Estate Plannings</option>
+                                <option value="Bankruptcys">Bankruptcys</option>
+                                <option value="Labors">Labors</option>
+                                <option value="Malpractices">Malpractices</option>
+                                <option value="Personal Injurys">Personal Injurys</option>
+                                <option value="Toxic Torts">Toxic Torts</option>
+                                <option value="Familys">Familys</option>
+                                <option value="Contract">Contract</option>
+                                <option value="Employment">Employment</option>
+                            </select>
+						</p>
+
+						<p>
+							<span>Description :</span><textarea rows="" cols="" name="description" required></textarea>
+						</p>
+
+						<p style="padding-top: 15px">
+							<span>&nbsp;</span><input class="submit" type="submit"
+								name="contact_submitted" value="Add Case" />
+						</p>
+
+					</div>
+				</form>
+
+			</div>
+		</div>
+	</div>
+</body>
+</html>

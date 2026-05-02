@@ -1,0 +1,196 @@
+{% load  static%}
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<title>caselink</title>
+<link rel="stylesheet" type="text/css" href="{% static '/style/style.css'%}" title="style" />
+
+
+<style>
+#customers {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04AA6D;
+  color: white;
+}
+</style>
+
+</head>
+
+<body>
+	<div id="main">
+		<div id="header">
+			<div id="logo">
+				<div id="logo_text">
+					<!-- class="logo_colour", allows you to change the colour of the text -->
+					<h3>
+						<a href="#"><font color="white">Court Case Management</font></a>
+					</h3>
+					<br/><br/>
+				</div>
+			</div>
+			<div id="menubar">
+				<ul id="menu">
+
+                    {% if request.session.role in "client" or request.session.role in "admin" %}
+                         <li><a href="/getlawyers">Lawyers</a></li>
+                    {% endif %}
+
+                    <li><a href="/getcases">Cases</a></li>
+
+                    {% if request.session.role in "client" or request.session.role in "lawyer" %}
+                         <li><a href="/getappointments">Appointments</a></li>
+                    {% endif %}
+
+                    <li><a href="/logout">logout</a></li>
+
+				</ul>
+			</div>
+		</div>
+		<div id="content_header"></div>
+		<div id="site_content">
+			<div id="content">
+				
+				<h1>Welcome to  <strong>{{request.session.username}}</strong>{{form.non_field_errors}}</h1>
+				Lawyers
+
+
+                <form name="form" action="/searchlawyeraction">
+
+					<div class="form_settings">
+
+                        <p>
+							<span>Experience:</span>
+                            <input class="contact" type="text" name="experience" required value="0"/>
+						</p>
+
+                        <p>
+							<span>Select Qualification:</span>
+
+                            <select name="qualification">
+                                <option value="no">--select -- </option>
+                                <option value="BALLB">BA LLB</option>
+                                <option value="BBALLB">BBA LLB</option>
+                                <option value="BCALLB">BCA LLB</option>
+                                <option value="BComLLB">B.Com LLB</option>
+                                <option value="BTechLLB">B.Tech LLB</option>
+                                <option value="BScLLB">B.Sc LLB</option>
+                            </select>
+						</p>
+
+                        <p>
+							<span>No of Cases Handled:</span>
+                            <input class="contact" type="text" name="noofcases" required value="0"/>
+						</p>
+
+                        <p>
+							<span>Select lawyer Type:</span>
+                            <select name="type">
+                                <option value="no">--select -- </option>
+                                <option value="Intellectual Property Lawyer">Intellectual Property Lawyer</option>
+                                <option value="Intellectual Property Lawyer">Intellectual Property Lawyer</option>
+                                <option value="Public Interest Lawyer">Public Interest Lawyer</option>
+                                <option value="Tax Lawyer" >Tax Lawyer</option>
+                                <option value="Corporate Lawyers">Corporate Lawyers</option>
+                                <option value="Immigration Lawyers">Immigration Lawyers</option>
+                                <option value="Criminal Lawyer">Criminal Lawyer</option>
+                                <option value="Civil Rights Lawyer">Civil Rights Lawyer</option>
+                                <option value="Family Lawyer">Family Lawyer</option>
+                                <option value="Environmental Lawyer">Environmental Lawyer</option>
+                                <option value="Entertainment Lawyer">Entertainment Lawyer</option>
+                                <option value="Estate Planning Lawyer">Estate Planning Lawyer</option>
+                                <option value="Civil Litigation Lawyers">Civil Litigation Lawyers</option>
+                                <option value="Constitutional Lawyers">Constitutional Lawyers</option>
+                                <option value="Real Estate Lawyers">Real Estate Lawyers</option>
+                                <option value="Estate Planning Lawyers">Estate Planning Lawyers</option>
+                                <option value="Bankruptcy Lawyers">Bankruptcy Lawyers</option>
+                                <option value="Labor Lawyers">Labor Lawyers</option>
+                                <option value="Malpractice Lawyers">Malpractice Lawyers</option>
+                                <option value="Personal Injury Lawyers">Personal Injury Lawyers</option>
+                                <option value="Toxic Tort Lawyers">Toxic Tort Lawyers</option>
+                                <option value="Family Lawyers">Family Lawyers</option>
+                                <option value="Contract Lawyer">Contract Lawyer</option>
+                                <option value="Employment Lawyer">Employment Lawyer</option>
+                            </select>
+						</p>
+
+						<p style="padding-top: 15px">
+							<span>&nbsp;</span><input class="submit" type="submit"
+								name="contact_submitted" value="View Lawyers" />
+						</p>
+
+					</div>
+				</form>
+
+                <br/>
+
+				<table id="customers">
+
+                    <tr>
+
+                        <td>User Name</td>
+						<td>Name</td>
+                        <td>Email</td>
+                        <td>Mobile</td>
+                        <td>Address</td>
+                        <td>Experience</td>
+                        <td>Qualification</td>
+                        <td>Type</td>
+
+                        {% if request.session.role  in "client" %}
+                            <td>Post Case</td>
+                            <td>Book Appointment</td>
+                        {% endif %}
+
+                        {% if request.session.role in "admin" %}
+                            <td>Status</td>
+                            <td>Activate</td>
+                            <td>Deactivate</td>
+                        {% endif %}
+
+					</tr>
+					{% for user in lawyers %}
+					<tr>
+						<td>{{ user.username}}</td>
+						<td>{{ user.name}}</td>
+                        <td>{{ user.email}}</td>
+                        <td>{{ user.mobile}}</td>
+						<td>{{ user.address}}</td>
+                        <td>{{ user.experience}}</td>
+                        <td>{{ user.qualification}}</td>
+                        <td>{{ user.type}}</td>
+                        {% if request.session.role  in "client" %}
+                            <td><a href="/postCase?lawyerid={{ user.username}}">Post Case</a></td>
+                            <td><a href="/postAppointment?lawyerid={{ user.username}}">Book Appointment</a></td>
+                        {% endif %}
+                        {% if request.session.role  in "admin" %}
+						    <td>{{ user.status}}</td>
+                            <td><a href="/activateAccount?username={{ user.username}}&status=yes">Activate</a></td>
+                            <td><a href="/activateAccount?username={{ user.username}}&status=no">Deactivate</a></td>
+                        {% endif %}
+					</tr>
+					{% endfor %}
+  				</table>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+

@@ -1,0 +1,129 @@
+{% load  static%}
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<title>caselink</title>
+<link rel="stylesheet" type="text/css" href="{% static 'style/style.css'%}" title="style" />
+</head>
+
+<body>
+	<div id="main">
+		<div id="header">
+			<div id="logo">
+				<div id="logo_text">
+					<!-- class="logo_colour", allows you to change the colour of the text -->
+					<h3>
+						<a href="#"><font color="white">Court Case Management</font></a>
+					</h3>
+					<br/><br/>
+				</div>
+			</div>
+			<div id="menubar">
+				<ul id="menu">
+
+					<li><a href="/index">Home</a></li>
+					<li><a href="/lawyerregistration">Lawyer Registration</a></li>
+                    <li><a href="/clientregistration">Client Registration</a></li>
+
+				</ul>
+			</div>
+		</div>
+		<div id="content_header"></div>
+		<div id="site_content">
+			<div id="content">
+
+				<h1>Registration Status : {{message}}</h1>
+
+				<form name="form" action="/lawyerregaction/" method="post">
+
+                    {% csrf_token %}
+
+                    <div class="form_settings">
+
+						<p>
+							<span>Name :</span><input class="contact" type="text" name="name" required />
+						</p>
+
+						<p>
+							<span>User Name :</span><input class="contact" type="text" name="username" required />
+						</p>
+
+						<p>
+							<span>Password :</span><input class="contact" type="password" name="password" required />
+						</p>
+
+						<p>
+							<span>Email :</span><input class="contact" type="email" name="email" required />
+						</p>
+
+						<p>
+							<span>Mobile :</span><input class="contact" type="text" name="mobile" required pattern="[789][0-9]{9}"/>
+						</p>
+
+						<p>
+							<span>Address :</span><textarea rows="" cols="" name="address" required></textarea>
+						</p>
+
+                        <p>
+							<span>Experience:</span><input class="contact" type="number" name="experience" required min="0"/>
+						</p>
+
+                        <p>
+							<span>Select lawyer Type:</span>
+                            <select name="type" required>
+                                <option value="">--select -- </option>
+                                <option value="Intellectual Property Lawyer">Intellectual Property Lawyer</option>
+                                <option value="Intellectual Property Lawyer">Intellectual Property Lawyer</option>
+                                <option value="Public Interest Lawyer">Public Interest Lawyer</option>
+                                <option value="Tax Lawyer" >Tax Lawyer</option>
+                                <option value="Corporate Lawyers">Corporate Lawyers</option>
+                                <option value="Immigration Lawyers">Immigration Lawyers</option>
+                                <option value="Criminal Lawyer">Criminal Lawyer</option>
+                                <option value="Civil Rights Lawyer">Civil Rights Lawyer</option>
+                                <option value="Family Lawyer">Family Lawyer</option>
+                                <option value="Environmental Lawyer">Environmental Lawyer</option>
+                                <option value="Entertainment Lawyer">Entertainment Lawyer</option>
+                                <option value="Estate Planning Lawyer">Estate Planning Lawyer</option>
+                                <option value="Civil Litigation Lawyers">Civil Litigation Lawyers</option>
+                                <option value="Constitutional Lawyers">Constitutional Lawyers</option>
+                                <option value="Real Estate Lawyers">Real Estate Lawyers</option>
+                                <option value="Estate Planning Lawyers">Estate Planning Lawyers</option>
+                                <option value="Bankruptcy Lawyers">Bankruptcy Lawyers</option>
+                                <option value="Labor Lawyers">Labor Lawyers</option>
+                                <option value="Malpractice Lawyers">Malpractice Lawyers</option>
+                                <option value="Personal Injury Lawyers">Personal Injury Lawyers</option>
+                                <option value="Toxic Tort Lawyers">Toxic Tort Lawyers</option>
+                                <option value="Family Lawyers">Family Lawyers</option>
+                                <option value="Contract Lawyer">Contract Lawyer</option>
+                                <option value="Employment Lawyer">Employment Lawyer</option>
+                            </select>
+						</p>
+
+                        <p>
+							<span>Select Qualification:</span>
+
+                            <select name="qualification" required>
+                                <option value="">--select -- </option>
+                                <option value="BALLB">BA LLB</option>
+                                <option value="BBALLB">BBA LLB</option>
+                                <option value="BCALLB">BCA LLB</option>
+                                <option value="BComLLB">B.Com LLB</option>
+                                <option value="BTechLLB">B.Tech LLB</option>
+                                <option value="BScLLB">B.Sc LLB</option>
+                            </select>
+						</p>
+
+						<p style="padding-top: 15px">
+							<span>&nbsp;</span><input class="submit" type="submit"
+								name="contact_submitted" value="Register" />
+						</p>
+
+					</div>
+				</form>
+
+			</div>
+		</div>
+	</div>
+</body>
+</html>
